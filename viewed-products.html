@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recently Viewed Products - Warmnest</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        main > aside {
+            width: 200px;
+        }
+
+        main > aside h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #745943;
+            font-size: 1.8rem;
+        }
+
+        main > aside hr {
+            border: 1px solid #b09b71;
+        }
+
+        main > aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        main > aside li {
+            margin-bottom: 10px;
+        }
+
+        main > aside li a {
+            text-decoration: none;
+            color: #5c4d37;
+            display: block;
+            padding: 5px 0;
+        }
+
+        main > aside li strong a {
+            color: #5c4d37;
+        }
+
+
+        main > aside button {
+            background-color: white;
+            border: 2px solid black;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 1em;
+            margin-top: 15px;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        main > aside button:hover {
+            background-color: #743a20;
+            color: white;
+        }
+
+        main > section {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+            /* Removed animation properties */
+            opacity: 1; 
+            transform: translateX(0);
+        }
+
+        main > section h1 {
+            margin-top: 0;
+            color: #a0522d;
+            margin-bottom: 15px;
+        }
+
+        main > section .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            /* Removed animation properties */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        main > section .product-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        main > section .product-item img {
+            border-radius: 5px;
+            border: 2px solid rgb(179, 65, 0);
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        main > section .product-item a {
+            color: #5c4d37;
+            text-decoration: none;
+        }
+
+        main > section .product-item a:hover {
+            color: #a0522d;
+        }
+
+        main > section .product-item span {
+            font-size: 1.2em;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+            <div class="header-search">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <nav class="header-center">
+            <a href="store.html">Store</a>
+            <a href="home.html">Home</a>
+            <a href="customer-support.html">About us</a>
+        </nav>
+        <div class="header-right">
+            <a href="profile.html">👤</a>
+            <a href="wishlist.html">☆</a>
+            <a href="cart.html">🛒</a>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Account Settings</h2>
+            <hr>
+            <ul>
+                <li><a href="profile.html">Recently purchased</a></li>
+                <li><a href="viewed-products.html"><strong>Recently viewed products</strong></a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="address.html">Addresses</a></li>
+                <li><a href="payment.html">Payment methods</a></li>
+                <li><a href="details.html">Account details</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+            </ul>
+            <button id="logout-button">Logout</button>
+        </aside>
+
+        <section>
+            <h1>Recently Viewed Products</h1>
+            <div class="product-grid">
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/Chair/beanbag-4.jpg" alt="bean bag">
+                        <span>Bean Bag</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/living room/1.jpg" alt="Sofa">
+                        <span>Sofa</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/living room/40.jpg" alt="Cozy Sofa">
+                        <span>Cozy Sofa</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/Chair/chair10.jpeg" alt="chair">
+                        <span>Single Chair</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/bed/bed1.jpg" alt="bed">
+                        <span>2 Person Bed</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <a href="store.html">
+                        <img src="images/Wvdb images/bed/bed2.png" alt="bed">
+                        <span>2 Person Bed</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2025 Warm Nest Furniture. All rights reserved.
+    </footer>
+
+    <script>
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    window.location.href = 'home.html';
+                });
+            }
+    </script>
+</body>
+</html>

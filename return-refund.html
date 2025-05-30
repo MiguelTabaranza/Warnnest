@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Refund Request - Warmnest</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-search button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        .header-right a:hover,
+        .header-center a:hover {
+            color: #5c4d37;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        main > aside {
+            width: 200px;
+        }
+
+        main > aside h1 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #745943;
+            font-size: 1.8rem;
+        }
+
+        main > aside hr {
+            border: 1px solid #b09b71;
+        }
+
+        main > aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        main > aside li {
+            margin-bottom: 10px;
+        }
+
+        main > aside li a {
+            text-decoration: none;
+            color: #5c4d37;
+            display: block;
+            padding: 5px 0;
+        }
+
+        main > aside li strong a {
+            color: #5c4d37;
+        }
+
+        .refund-request-section {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+            opacity: 1; /* Changed from 0 */
+        }
+
+        .refund-request-section h1 {
+            margin-top: 0;
+            color: #745943;
+            font-size: 2rem;
+            opacity: 1; /* Changed from 0 */
+        }
+
+        .refund-request-section h2 {
+            margin-top: 20px;
+            color: #a0522d;
+            opacity: 1; /* Changed from 0 */
+        }
+
+        .refund-request-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            opacity: 1; /* Changed from 0 */
+        }
+
+        .refund-request-section th, .refund-request-section td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .refund-request-section th {
+            background-color: #f2f2f2;
+        }
+
+        .refund-request-section .product-trigger {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: bold;
+        }
+
+        .refund-request-section table td img {
+            max-width: 80px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .refund-request-section table button.product-trigger {
+            background-color: #f8f0e3;
+            color: #745943;
+            border: 1px solid #b09b71;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .refund-request-section table button.product-trigger:hover {
+            background-color: #e1d7c8;
+        }
+
+        .refund-options {
+            margin-top: 20px;
+            opacity: 1; /* Changed from 0 */
+        }
+
+        .refund-options label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .refund-options input[type="file"] {
+            margin-bottom: 15px;
+            padding: 6px 10px;
+            border: 1px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .refund-options input[type="file"]::file-selector-button {
+            background-color: #f8f0e3;
+            color: #745943;
+            border: none;
+            border-right: 1px solid #b09b71;
+            padding: 8px 12px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .refund-options input[type="file"]::file-selector-button:hover {
+            background-color: #e1d7c8;
+        }
+
+        .refund-options textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        #refund-section {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            opacity: 1; /* Changed from 0 */
+            transform: translateY(0); /* Changed from translateY(10px) */
+            display: none;
+        }
+
+        #refund-title {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #refund-form fieldset {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        #refund-form legend strong {
+            color: #333;
+            font-weight: bold;
+        }
+
+        #refund-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #refund-form input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        #refund-form button[type="submit"] {
+            background-color: #2e8b57;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #refund-form button[type="submit"]:hover {
+            background-color: #1e643b;
+        }
+
+        #submission-status {
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+            opacity: 1; /* Changed from 0 */
+        }
+
+       footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-search {
+                margin-top: 10px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .header-center {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+
+            .header-center a {
+                margin: 5px 10px;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: #745943;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .header-center a:hover {
+                background-color: #e1d7c8;
+                color: #a0522d;
+            }
+
+            main {
+                flex-direction: column;
+                align-items: center; 
+            }
+
+            main > aside {
+                width: 100%;
+                display: flex; 
+                flex-direction: column; 
+                align-items: center;
+            }
+
+            main > aside ul {
+                width: 100%; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0; 
+            }
+
+            main > aside li {
+                margin-bottom: 10px;
+                text-align: center; 
+                width: 100%;
+            }
+
+            .refund-request-section {
+                padding: 15px;  
+            }
+
+            .refund-request-section h1{
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .refund-request-section h2{
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .refund-options{
+                text-align: center;
+            }
+
+            #refund-form{
+                width: 90%;
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">           
+            <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+            <div class="header-search">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <nav class="header-center">
+            <a href="store.html">Store</a>
+            <a href="home.html">Home</a>
+            <a id="about-us-link" href="customer-support.html">About us</a>
+        </nav>
+        <div class="header-right">
+            <a href="profile.html">👤</a>
+            <a href="wishlist.html">☆</a>
+            <a href="cart.html">🛒</a>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h1>About Us</h1>
+            <hr>
+            <ul>
+                <li><a href="customer-support.html">Customer Support</a></li>
+                <li><a href="product-reviews.html">Product Reviews</a></li>
+                <li><a href="return-refund.html"><strong>Return & Refund Policy</strong></a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+                <li><a href="help-center.html">Help Center</a></li>
+                <li><a href="live-chat.html">Live Chat Support</a></li>
+            </ul>
+        </aside>
+
+        <div class="refund-request-section">
+            <h1>Refund Request</h1>
+
+            <h2>Recently Purchased Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Refund</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="store.html" class="product-trigger" data-product="Bean Bag"><img src="images/Wvdb images/Chair/beanbag-4.jpg" alt="Bean Bag"></a></td>
+                        <td><a href="store.html" class="product-trigger" data-product="Bean Bag">Bean Bag</a></td>
+                        <td>1</td>
+                        <td><button class="product-trigger" data-product="Bean Bag">Request</button></td>
+                    </tr>
+                    <tr>
+                        <td><a href="store.html" class="product-trigger" data-product="Sofa"><img src="images/Wvdb images/living room/1.jpg" alt="Sofa"></a></td>
+                        <td><a href="store.html" class="product-trigger" data-product="Sofa">Sofa</a></td>
+                        <td>1</td>
+                        <td><button class="product-trigger" data-product="Sofa">Request</button></td>
+                    </tr>
+                    <tr>
+                        <td><a href="store.html" class="product-trigger" data-product="Dining Set"><img src="images/Wvdb images/set/dining.jpg" alt="Dining Set"></a></td>
+                        <td><a href="store.html" class="product-trigger" data-product="Dining Set">Dining Set</a></td>
+                        <td>1</td>
+                        <td><button class="product-trigger" data-product="Dining Set">Request</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="refund-options">
+                <label for="damage-image"><strong>Upload Image of Damage (Optional):</strong></label>
+                <input type="file" id="damage-image" accept="image/*">
+
+                <label for="user-message"><strong>Add message</strong></label><br>
+                <textarea id="user-message" rows="2" cols="50"></textarea>
+            </div>
+
+            <div id="refund-section">
+                <h3 id="refund-title"></h3>
+                <form id="refund-form">
+                    <fieldset>
+                        <legend><strong>Cause of Refund:</strong></legend>
+                        <label><input type="radio" name="refund-cause" value="Defective/Damaged Product" required> Defective/Damaged Product</label><br>
+                        <label><input type="radio" name="refund-cause" value="Missing Parts/Accessories"> Missing Parts/Accessories</label><br>
+                        <label><input type="radio" name="refund-cause" value="Duplicate Charges"> Duplicate Charges</label><br>
+                        <label><input type="radio" name="refund-cause" value="Wrong Item Shipped"> Wrong Item Shipped</label><br>
+                        <label><input type="radio" name="refund-cause" value="Lost in Transit"> Lost in Transit</label>
+                    </fieldset>
+                    <button type="submit">Submit Refund Request</button>
+                </form>
+                <div id="submission-status"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Warm Nest Furniture. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.product-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                const product = this.getAttribute('data-product');
+                document.getElementById('refund-title').textContent = `Refund Request for: ${product}`;
+                document.getElementById('refund-section').style.display = 'block';
+                document.getElementById('refund-form').reset();
+                document.getElementById('submission-status').textContent = "";
+            });
+        });
+
+        document.getElementById('refund-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cause = document.querySelector('input[name="refund-cause"]:checked')?.value;
+            const message = document.getElementById('user-message').value;
+            if (!cause) {
+                alert("Please select a refund cause");
+                return;
+            }
+            document.getElementById('submission-status').textContent = "✅ Refund request submitted successfully.";
+            document.getElementById('refund-form').reset();
+            document.getElementById('user-message').value = "";
+        });
+    </script>
+</body>
+</html>

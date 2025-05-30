@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recently Purchased - Warmnest</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        main > aside {
+            width: 200px;
+        }
+
+        main > aside h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #745943;
+            font-size: 1.8rem;
+        }
+
+        main > aside hr {
+            border: 1px solid #b09b71;
+        }
+
+        main > aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        main > aside li {
+            margin-bottom: 10px;
+        }
+
+        main > aside li a {
+            text-decoration: none;
+            color: #5c4d37;
+            display: block;
+            padding: 5px 0;
+        }
+
+        main > aside li strong a {
+            color: #5c4d37;
+        }
+
+        /* Styles for the Logout Button */
+        main > aside button {
+            background-color: white;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 1em;
+            margin-top: 15px;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            color: #333; /* Ensure button text color is not blue */
+            text-decoration: none; /* Ensure no underline */
+        }
+
+        main > aside button:hover {
+            background-color: #743a20;
+            color: white;
+        }
+
+        main > section {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        main > section h1 {
+            margin-top: 0;
+            color: #a0522d;
+            margin-bottom: 20px;
+        }
+
+        main > section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        main > section th,
+        main > section td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        main > section th {
+            background-color: #f2f2f2;
+            color: #745943;
+        }
+
+        main > section tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        main > section tfoot td {
+            font-weight: bold;
+        }
+
+        .total-price-cell {
+            text-align: left;
+            font-weight: bold;
+            color: #a0522d;
+            font-size: 1.1em;
+        }
+
+        .footer-button-cell {
+            text-align: right;
+            padding-right: 8px;
+        }
+
+        main > section button {
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        main > section button:hover {
+            background-color: #1e643b;
+        }
+
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .product-details-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 5px 0;
+        }
+
+        .product-image-cell {
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .product-image-cell img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 7px;
+            display: block;
+        }
+
+        .product-text-details {
+            flex-grow: 1;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #5c4d37;
+            margin-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .product-description {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 0;
+        }
+
+        .product-price {
+            font-size: 1.1em;
+            color: #a0522d;
+            font-weight: bold;
+        }
+
+        .product-quantity {
+            font-size: 1em;
+            color: #888;
+        }
+
+        /* --- Mobile Styles --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+            }
+
+            .header-search {
+                margin-top: 10px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .header-search input[type="text"] {
+                width: calc(100% - 40px);
+            }
+
+            .header-search button:hover {
+                background-color: #f0f0f0;
+            }
+
+            .header-center {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+
+            .header-center a {
+                margin: 5px 10px;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: #745943;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .header-center a:hover {
+                background-color: #e1d7c8;
+                color: #a0522d;
+            }
+
+            main {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+            }
+
+            main > aside {
+                width: 100%;
+                order: 2;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            main > aside ul {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0;
+            }
+
+            main > aside li {
+                margin-bottom: 10px;
+                text-align: center;
+                width: 100%;
+            }
+
+            main > aside li a {
+                width: 100%;
+                text-align: center;
+            }
+
+            main > section {
+                order: 1;
+                padding: 15px;
+            }
+
+            main > section table,
+            main > section thead,
+            main > section tbody,
+            main > section th,
+            main > section td,
+            main > section tr {
+                display: block;
+            }
+
+            main > section thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            main > section tr {
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            main > section td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            main > section td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                color: #745943;
+            }
+
+            .product-details-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-image-cell {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .product-image-cell img {
+                max-width: 150px;
+            }
+
+            .product-text-details {
+                width: 100%;
+                text-align: center;
+            }
+
+            .product-price, .product-quantity {
+                text-align: center;
+                display: block;
+                margin-top: 5px;
+            }
+
+            .total-price-cell,
+            .footer-button-cell {
+                text-align: center;
+                padding-right: 0;
+            }
+
+            footer {
+                padding: 10px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+            <div class="header-search">
+                <input type="text" placeholder="Search" aria-label="Search items">
+            </div>
+        </div>
+        <nav class="header-center">
+            <a href="store.html">Store</a>
+            <a href="home.html">Home</a>
+            <a id="about-us-link" href="customer-support.html">About us</a>
+        </nav>
+        <div class="header-right">
+            <a href="profile.html" aria-label="Profile">👤</a>
+            <a href="wishlist.html" aria-label="Wishlist">☆</a>
+            <a href="cart.html" aria-label="Cart">🛒</a>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Account Settings</h2>
+            <hr>
+            <ul>
+                <li><a href="profile.html"><strong>Recently purchased</strong></a></li>
+                <li><a href="viewed-products.html">Recently viewed products</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="address.html">Addresses</a></li>
+                <li><a href="payment.html">Payment methods</a></li>
+                <li><a href="details.html">Account details</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+            </ul>
+            <button id="logout-button">Logout</button>
+        </aside>
+
+        <section>
+            <h1>Recently Purchased</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="recently-purchased-items">
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/Chair/beanbag-4.jpg" alt="Bean Bag">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">Bean Bag</h3>
+                                        <p class="product-description">Super comfy bean bag for lounging.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="30000" data-label="Price">₱30,000</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/Chair/chair10.jpeg" alt="Single Chair">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">Single Chair</h3>
+                                        <p class="product-description">Elegant single chair for any room.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="30000" data-label="Price">₱30,000</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/living room/1.jpg" alt="Sofa">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">Sofa</h3>
+                                        <p class="product-description">Spacious and comfortable three-seater sofa.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="30000" data-label="Price">₱30,000</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/living room/40.jpg" alt="Cozy Sofa">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">Cozy Sofa</h3>
+                                        <p class="product-description">A smaller, cozier sofa option for intimate spaces.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="16999" data-label="Price">₱16,999</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/bed/bed1.jpg" alt="2 Person Bed">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">2 Person Bed</h3>
+                                        <p class="product-description">Queen-sized bed for a comfortable night's sleep.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="21050" data-label="Price">₱21,050</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Item">
+                            <a href="store.html" class="product-link">
+                                <div class="product-details-container">
+                                    <div class="product-image-cell">
+                                        <img src="images/Wvdb images/bed/bed2.png" alt="Another 2 Person Bed">
+                                    </div>
+                                    <div class="product-text-details">
+                                        <h3 class="product-name">2 Person Bed</h3>
+                                        <p class="product-description">Another comfortable queen-sized bed option.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="product-price" data-price="21050" data-label="Price">₱21,050</td>
+                        <td class="product-quantity" data-quantity="1" data-label="Quantity">Qty: 1</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" style="text-align: right; font-weight: bold;">Total Price:</td>
+                        <td id="overall-total-price" class="total-price-cell"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="footer-button-cell">
+                            <button id="buy-again-button">Buy again</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        © 2025 Warm Nest Furniture. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function getFilename(url) {
+                return url.split('/').pop().split('?')[0].split('#')[0];
+            }
+
+            const currentPath = getFilename(window.location.pathname);
+
+            const sidebarLinks = document.querySelectorAll('aside ul li a');
+            sidebarLinks.forEach(link => {
+                if (getFilename(link.getAttribute('href')) === currentPath) {
+                    link.parentElement.classList.add('active');
+                }
+            });
+
+            const aboutUsLink = document.getElementById('about-us-link');
+            const aboutUsPages = [
+                'customer-support.html',
+                'product-reviews.html',
+                'return-refund.html',
+                'social-media.html',
+                'help-center.html',
+                'live-chat.html',
+                'about-us.html'
+            ];
+            if (aboutUsPages.includes(currentPath)) {
+                aboutUsLink.classList.add('active-header-link');
+            }
+
+            const buyAgainButton = document.getElementById('buy-again-button');
+            if (buyAgainButton) {
+                buyAgainButton.addEventListener('click', buyAgain);
+            }
+
+            // Updated JavaScript for the Logout Button
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    window.location.href = 'home.html'; // Redirects to home.html on click
+                });
+            }
+
+            calculateTotalPrice();
+        });
+
+        function calculateTotalPrice() {
+            let total = 0;
+            const itemRows = document.querySelectorAll('#recently-purchased-items tr');
+            itemRows.forEach(row => {
+                const priceElement = row.querySelector('.product-price');
+                const quantityElement = row.querySelector('.product-quantity');
+
+                if (priceElement && quantityElement) {
+                    const price = parseFloat(priceElement.dataset.price);
+                    const quantity = parseInt(quantityElement.dataset.quantity);
+                    total += price * quantity;
+                }
+            });
+            document.getElementById('overall-total-price').textContent = `₱${total.toLocaleString()}`;
+            return total;
+        }
+
+        function buyAgain() {
+            const purchasedItems = [];
+            let newCartTotal = 0;
+            const tableRows = document.querySelectorAll('#recently-purchased-items tr');
+
+            tableRows.forEach(row => {
+                const productName = row.querySelector('.product-name').textContent.trim();
+                const productPrice = parseFloat(row.querySelector('.product-price').dataset.price);
+                const productQuantity = parseInt(row.querySelector('.product-quantity').dataset.quantity);
+
+                purchasedItems.push({
+                    name: productName,
+                    price: productPrice,
+                    quantity: productQuantity
+                });
+                newCartTotal += productPrice * productQuantity;
+            });
+
+            if (purchasedItems.length > 0) {
+                console.log("Adding the following items to your cart for repurchase:");
+                purchasedItems.forEach(item => {
+                    console.log(`${item.name} - Price: ₱${item.price.toLocaleString()} - Quantity: ${item.quantity}`);
+                });
+                console.log(`Simulated New Cart Total: ₱${newCartTotal.toLocaleString()}`);
+                alert(`All ${purchasedItems.length} items from your recently purchased list have been added to your cart! Total: ₱${newCartTotal.toLocaleString()}`);
+            } else {
+                alert("No items found in your recently purchased list to add to cart.");
+            }
+        }
+    </script>
+
+</body>
+</html>

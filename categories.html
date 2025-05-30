@@ -1,0 +1,1160 @@
+<html>
+<head>
+    <title>Warmnest Furniture</title>
+	<style>
+	body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #e3d8c8;
+    border-bottom: 2px solid #5b3d29;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    gap: 20px; /* This adds space between the three main sections */
+}
+
+        .nav-header input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            font-size: 20px;
+            color: #5b3d29;
+            font-family: 'Canva Sans', sans-serif;
+        }
+
+        .nav-links img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 20px;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            display: flex;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .filters {
+            width: 200px;
+            padding-right: 30px;
+            color: #745943;
+        }
+
+        .filter-option {
+            margin-bottom: 10px;
+        }
+
+        footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #745943;
+    background-color: #e1d7c8;
+	color: #745943;
+    margin-top: auto;
+}
+        
+        .filter-notification {
+            position: fixed;
+            top: 70px;
+            right: 30px;
+            width: 150px;
+            background: #e3d8c8;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 5px solid #5b3d29;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-notification.show {
+            display: flex;
+        }
+
+        .filter-notification-content {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .filter-notification button {
+            background: none;
+            border: none;
+            color: #5b3d29;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            align-self: flex-end;
+        }
+
+        .filter-notification button:hover {
+            color: #745943;
+        }
+
+        .filter-item {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .products-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .products-grid {
+			min-height: 700px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 30px;
+            padding: 20px;
+        }
+		
+
+        .product {
+            border: 1px solid #e3d8c8;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #5b3d29;
+        }
+
+        .stars {
+            color: #c59d5f;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 18px;
+            color: #5b3d29;
+            margin: 10px 0;
+        }
+
+        .dimensions {
+            font-size: 14px;
+            color: #745943;
+            margin: 10px 0;
+        }
+
+        .product-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .product-actions button,
+    .buy-now-button { /* Add .buy-now-button to this selector */
+        flex: 1;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-align: center; /* Add this to center text in both buttons */
+        display: block; /* Ensure consistent display property */
+    }
+
+    .buy-now-button {
+        background-color: #5b3d29;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .buy-now-button:hover {
+        background-color: #4a3020;
+        transform: translateY(-2px);
+    }
+
+    .add-to-cart-button {
+        background-color: #c59d5f;
+        color: #5b3d29;
+        border: 1px solid #c59d5f;
+    }
+
+    .add-to-cart-button:hover {
+        background-color: #b38e4a;
+        transform: translateY(-2px);
+    }
+
+        #active-filters {
+            background: #e3d8c8;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+			min-height: 0;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        .page-button {
+            padding: 8px 12px;
+            border: 1px solid #5b3d29;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .page-button.active {
+            background-color: #5b3d29;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, auto);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .filter-notification {
+                width: 250px;
+                right: 10px;
+            }
+        }
+		.logo {
+      display: flex;
+      align-items: center;
+      font-size: 2em;
+      font-family: 'Merriweather', serif;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+	
+	.logo-search-container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust this value to control the space between logo and search */
+}
+	</style>
+</head>
+<body>
+   <div class="page-wrapper">
+        <header class="nav-header">
+    <div class="logo-search-container"> <!-- Add this wrapper div -->
+        <div class="logo">
+            <img src="Wvdb-images/homepage/logo.png" alt="Logo">
+        </div>
+        <input type="text" placeholder="Search" id="store-search-input">
+    </div>
+    <div class="nav-links">
+        <a href="store.html"><div>Store</div></a>
+        <a href="home.html"><div>Home</div></a>
+        <a href="customer-support.html"><div>About us</div></a>
+    </div>
+    <div class="icons">
+        <a href="profile.html" class="icon-link">👤</a>
+        <a href="wishlist.html" class="icon-link">☆</a>
+        <a href="cart.html" class="icon-link">🛒</a>
+    </div>
+</header>
+
+    <div class="main-content">
+        <div class="filters">
+            <h2>Store</h2>
+            <a href = "store.html"><div class="filter-option"><strong>Categories ></strong></div>
+				<a href = "catSofa.html"><h5>Sofa Set</h5></a>
+				<a href = "catLivi.html"><h5>Living Room</h5></a>
+				<a href = "catDini.html"><h5>Dining Room</h5></a>
+				<a href = "catBed.html"><h5>Bed Room</h5></a>
+            <a href = "colors.html"><div class="filter-option">Colors +</div></a>
+            <a href = "sizes.html"><div class="filter-option">Sizes +</div></a>
+            <a href = "prices.html"><div class="filter-option">Price +</div></a>
+            <a href = "material.html"><div class="filter-option">Material +</div></a>
+            <a href = "sales.html"><div class="filter-option">Top Sales +</div></a>
+        </div>
+
+         <div class="products-container">
+                <div id="active-filters"></div>
+                <div class="products-grid" id="products-grid"></div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Warm Nest Furniture. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Filter Notification -->
+    <div class="filter-notification" id="filter-notification">
+        <button id="reset-filters" aria-label="Clear all filters">✕</button>
+        <div class="filter-notification-content" id="notification-content"></div>
+    </div>
+
+	<script src = "script/shared.js"></script>
+    <script>
+	const products = [
+        {
+                    "id": "beanbag",
+                    "name": "Bean Bag",
+                    "price": 30000,
+                    "rating": 5,
+                    "weight": 15,
+                    "width": 70,
+                    "height": 80,
+                    "depth": 60,
+					"defaultColor": "#ccff66", // Add this line
+					"color": "#ccff66",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#ccff66", "name": "Lime Green", "priceAdjustment": 1000}
+				],
+                    "material": "Leather",
+                    "images": ["Wvdb-images/Chair/beanbag-4.jpg"],
+                    "description": "Faux Leather 75 cm diameter 110 cm height filled with fresh virgin polystyrene beans. Double stitching for extra strong hold. Product weight with filling – 5 kgs with lining fabric at the base so the beans don't come out easily."
+                },
+                {
+                    "id": "sofa",
+                    "name": "Sofa",
+                    "price": 40000,
+                    "rating": 4,
+                    "weight": 45,
+                    "width": 200,
+                    "height": 80,
+                    "depth": 90,
+					"defaultColor": "#666666", // Add this line
+					"color": "#666666",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+				],
+                    "material": "Fabric",
+                    "images": ["Wvdb-images/living-room/19.jpg"],
+                    "description": "Comfortable 3-seater sofa with high-density foam cushions and durable fabric upholstery. Perfect for living rooms with modern decor."
+                },
+                {
+                    "id": "chair",
+                    "name": "Chair",
+                    "price": 10000,
+                    "rating": 3,
+                    "weight": 8,
+                    "width": 50,
+                    "height": 90,
+                    "depth": 50,
+					"defaultColor": "#666666", // Add this line
+					"color": "#666666",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+				],
+                    "material": "Wood",
+                    "images": ["Wvdb-images/Chair/chair5.jpg"],
+                    "description": "Classic wooden chair with comfortable cushion."
+                },
+                {
+                    "id": "table",
+                    "name": "Coffee Table",
+                    "price": 15000,
+                    "rating": 4,
+                    "weight": 25,
+                    "width": 120,
+                    "height": 45,
+                    "depth": 60,
+					"defaultColor": "#5a4e4b", // Add this line
+					"color": "#5a4e4b",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+				],
+                    "material": "Glass/Metal",
+                    "images": ["Wvdb-images/living-room/table.jpg"],
+                    "description": "Modern glass-top coffee table with metal frame."
+                },
+                {
+                    "id": "bookshelf",
+                    "name": "Bookshelf",
+                    "price": 22000,
+                    "rating": 4,
+                    "weight": 35,
+                    "width": 80,
+                    "height": 180,
+                    "depth": 30,
+                    "material": "Wood",
+					"defaultColor": "#666666", // Add this line
+					"color": "#666666",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+				],
+                    "images": ["Wvdb-images/living-room/book.jpeg"],
+                    "description": "5-tier wooden bookshelf with ample storage space."
+                },
+                {
+                    "id": "bed1",
+                    "name": "Queen Bed",
+                    "price": 50000,
+                    "rating": 5,
+                    "weight": 80,
+                    "width": 160,
+                    "height": 100,
+                    "depth": 200,
+					"defaultColor": "#00429d", // Add this line
+					"color": "#00429d",
+					"availableColors": [
+					{"code": "#5b3218", "name": "Dark Brown", "priceAdjustment": 0},
+					{"code": "#5a4e4b", "name": "Gray Brown", "priceAdjustment": 1500},
+					{"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000},
+					{"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+				],	
+                    "material": "Wood/Fabric",
+                    "images": ["Wvdb-images/bed/bed21.jpg"],
+                    "description": "Solid wood queen bed frame with upholstered headboard."
+                },
+				{
+            "id": "bed2",
+            "name": "King Bed",
+            "price": 50000,
+            "rating": 5,
+            "weight": 90,
+            "width": 180,
+            "height": 100,
+            "depth": 210,
+            "defaultColor": "#e3d8c8",
+            "color": "#e3d8c8",
+            "availableColors": [
+                {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+                {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+                {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000}
+            ],
+            "material": "Wood/Fabric",
+            "images": ["Wvdb-images/bed/bed23.jpg"],
+            "description": "Luxury king size bed with premium fabric upholstery."
+        },
+        {
+            "id": "bed3",
+            "name": "Single Bed",
+            "price": 20000,
+            "rating": 3,
+            "weight": 50,
+            "width": 100,
+            "height": 80,
+            "depth": 190,
+            "defaultColor": "#5b3d29",
+            "color": "#5b3d29",
+            "availableColors": [
+                {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+                {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+            ],
+            "material": "Wood",
+            "images": ["Wvdb-images/bed/bed12.jpg"],
+            "description": "Classic single bed frame with sturdy wooden construction."
+        },
+        {
+            "id": "bed4",
+            "name": "Bunk Bed",
+            "price": 35000,
+            "rating": 4,
+            "weight": 70,
+            "width": 100,
+            "height": 160,
+            "depth": 190,
+            "defaultColor": "#5b3d29",
+            "color": "#5b3d29",
+            "availableColors": [
+                {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+                {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+            ],
+            "material": "Wood/Metal",
+            "images": ["Wvdb-images/bed/25.jpg"],
+            "description": "Space-saving bunk bed with safety rails."
+        },
+        {
+            "id": "bed5",
+            "name": "Canopy Bed",
+            "price": 60000,
+            "rating": 5,
+            "weight": 85,
+            "width": 160,
+            "height": 150,
+            "depth": 200,
+            "defaultColor": "#e3d8c8",
+            "color": "#e3d8c8",
+            "availableColors": [
+                {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+                {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+            ],
+            "material": "Wood/Fabric",
+            "images": ["Wvdb-images/bed/24.jpg"],
+            "description": "Elegant canopy bed with luxurious fabric drapes."
+        },
+        {
+            "id": "bed6",
+            "name": "Daybed",
+            "price": 25000,
+            "rating": 4,
+            "weight": 45,
+            "width": 140,
+            "height": 80,
+            "depth": 80,
+            "defaultColor": "#5b3d29",
+            "color": "#5b3d29",
+            "availableColors": [
+                {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+                {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+            ],
+            "material": "Wood/Fabric",
+            "images": ["Wvdb-images/bed/bed8.jpeg"],
+            "description": "Versatile daybed perfect for lounging or sleeping."
+        },
+		
+		{
+        "id": "dining1",
+        "name": "6-Seater Dining Set",
+        "price": 45000,
+        "rating": 4,
+        "weight": 75,
+        "width": 180,
+        "height": 75,
+        "depth": 100,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+            {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000}
+        ],
+        "material": "Wood/Glass",
+        "images": ["Wvdb-images/set/6.jpg"],
+        "description": "Elegant 6-seater dining table with matching chairs and glass top."
+    },
+    {
+        "id": "dining2",
+        "name": "4-Seater Dining Set",
+        "price": 35000,
+        "rating": 5,
+        "weight": 60,
+        "width": 140,
+        "height": 75,
+        "depth": 80,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+            {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000}
+        ],
+        "material": "Wood",
+        "images": ["Wvdb-images/set/5.jpg"],
+        "description": "Compact 4-seater dining set perfect for small spaces."
+    },
+    {
+        "id": "dining3",
+        "name": "Extendable Dining Table",
+        "price": 40000,
+        "rating": 3,
+        "weight": 65,
+        "width": 120,
+        "height": 75,
+        "depth": 80,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Wood",
+        "images": ["Wvdb-images/set/4.jpg"],
+        "description": "Versatile extendable table that seats 4-8 people."
+    },
+    {
+        "id": "dining4",
+        "name": "Bar Table Set",
+        "price": 30000,
+        "rating": 4,
+        "weight": 50,
+        "width": 100,
+        "height": 110,
+        "depth": 60,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Wood/Metal",
+        "images": ["Wvdb-images/set/3.jpg"],
+        "description": "Modern bar table set with 4 stools."
+    },
+    {
+        "id": "dining5",
+        "name": "Outdoor Dining Set",
+        "price": 55000,
+        "rating": 5,
+        "weight": 80,
+        "width": 160,
+        "height": 75,
+        "depth": 90,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Rattan/Glass",
+        "images": ["Wvdb-images/set/2.jpg"],
+        "description": "Weather-resistant outdoor dining set with 6 chairs."
+    },
+    {
+        "id": "dining6",
+        "name": "Breakfast Nook Set",
+        "price": 28000,
+        "rating": 4,
+        "weight": 55,
+        "width": 120,
+        "height": 75,
+        "depth": 70,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Wood/Fabric",
+        "images": ["Wvdb-images/set/1.jpg"],
+        "description": "Cozy breakfast nook set with bench seating."
+    }, 
+	
+	{
+        "id": "sofa1",
+        "name": "3-Seater Sofa",
+        "price": 35000,
+        "rating": 4,
+        "weight": 65,
+        "width": 200,
+        "height": 85,
+        "depth": 90,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+            {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000}
+        ],
+        "material": "Fabric",
+        "images": ["Wvdb-images/living-room/1.jpg"],
+        "description": "Comfortable 3-seater sofa with high-density foam cushions and durable fabric upholstery."
+    },
+    {
+        "id": "sofa2",
+        "name": "L-Shaped Sectional",
+        "price": 55000,
+        "rating": 5,
+        "weight": 95,
+        "width": 280,
+        "height": 85,
+        "depth": 160,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+            {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 2000}
+        ],
+        "material": "Leather",
+        "images": ["Wvdb-images/living-room/13.jpg"],
+        "description": "Premium L-shaped sectional sofa with genuine leather upholstery and reclining features."
+    },
+    {
+        "id": "sofa3",
+        "name": "2-Seater Loveseat",
+        "price": 28000,
+        "rating": 3,
+        "weight": 45,
+        "width": 160,
+        "height": 85,
+        "depth": 85,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Velvet",
+        "images": ["Wvdb-images/living-room/26.jpg"],
+        "description": "Elegant 2-seater loveseat with plush velvet upholstery and wooden legs."
+    },
+    {
+        "id": "sofa4",
+        "name": "Sofa Bed",
+        "price": 40000,
+        "rating": 4,
+        "weight": 70,
+        "width": 190,
+        "height": 90,
+        "depth": 95,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Fabric",
+        "images": ["Wvdb-images/living-room/33.jpg"],
+        "description": "Versatile sofa that converts into a comfortable bed for guests."
+    },
+    {
+        "id": "sofa5",
+        "name": "Modern Chaise Lounge",
+        "price": 45000,
+        "rating": 5,
+        "weight": 60,
+        "width": 180,
+        "height": 80,
+        "depth": 100,
+        "defaultColor": "white",
+        "color": "white",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+			{"code": "white", "name": "White", "priceAdjustment": 2000}
+        ],
+        "material": "Microfiber",
+        "images": ["Wvdb-images/living-room/17.jpg"],
+        "description": "Sleek modern chaise lounge with ergonomic design and premium microfiber fabric."
+    },
+    {
+        "id": "sofa6",
+        "name": "Recliner Sofa Set",
+        "price": 60000,
+        "rating": 4,
+        "weight": 85,
+        "width": 220,
+        "height": 90,
+        "depth": 100,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Leather",
+        "images": ["Wvdb-images/living-room/40.jpg"],
+        "description": "Luxury recliner sofa set with power reclining mechanism and premium leather upholstery."
+    },
+	{
+        "id": "living1",
+        "name": "Coffee Table",
+        "price": 18000,
+        "rating": 4,
+        "weight": 25,
+        "width": 120,
+        "height": 45,
+        "depth": 60,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500},
+            {"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+        ],
+        "material": "Wood/Glass",
+        "images": ["Wvdb-images/living-room/47.jpg"],
+        "description": "Modern rectangular coffee table with tempered glass top and wooden frame."
+    },
+    {
+        "id": "living2",
+        "name": "TV Stand",
+        "price": 22000,
+        "rating": 5,
+        "weight": 35,
+        "width": 160,
+        "height": 50,
+        "depth": 40,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Wood/Metal",
+        "images": ["Wvdb-images/living-room/46.jpg"],
+        "description": "Stylish TV stand with cable management and ample storage space."
+    },
+    {
+        "id": "living3",
+        "name": "Bookshelf",
+        "price": 25000,
+        "rating": 4,
+        "weight": 30,
+        "width": 80,
+        "height": 180,
+        "depth": 30,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1500}
+        ],
+        "material": "Wood",
+        "images": ["Wvdb-images/living-room/45.jpg"],
+        "description": "5-tier wooden bookshelf with adjustable shelves for versatile storage."
+    },
+    {
+        "id": "living4",
+        "name": "Entertainment Center",
+        "price": 40000,
+        "rating": 5,
+        "weight": 60,
+        "width": 200,
+        "height": 180,
+        "depth": 50,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#666666", "name": "Charcoal", "priceAdjustment": 1000}
+        ],
+        "material": "Engineered Wood",
+        "images": ["Wvdb-images/living-room/44.jpg"],
+        "description": "Complete entertainment center with space for TV, components, and media storage."
+    },
+    {
+        "id": "living5",
+        "name": "Accent Chair",
+        "price": 15000,
+        "rating": 4,
+        "weight": 15,
+        "width": 70,
+        "height": 85,
+        "depth": 70,
+        "defaultColor": "#00429d",
+        "color": "#00429d",
+        "availableColors": [
+            {"code": "#00429d", "name": "Navy Blue", "priceAdjustment": 0},
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 1500}
+        ],
+        "material": "Fabric",
+        "images": ["Wvdb-images/living-room/43.jpeg"],
+        "description": "Comfortable accent chair with stylish design, perfect for living rooms."
+    },
+    {
+        "id": "living6",
+        "name": "Console Table",
+        "price": 20000,
+        "rating": 3,
+        "weight": 20,
+        "width": 120,
+        "height": 75,
+        "depth": 35,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 0},
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 1500}
+        ],
+        "material": "Wood/Metal",
+        "images": ["Wvdb-images/living-room/ct.jpg"],
+        "description": "Sleek console table perfect for hallways or behind sofas."
+    },
+    {
+        "id": "living7",
+        "name": "Side Table Set",
+        "price": 12000,
+        "rating": 4,
+        "weight": 15,
+        "width": 50,
+        "height": 55,
+        "depth": 50,
+        "defaultColor": "#5b3d29",
+        "color": "#5b3d29",
+        "availableColors": [
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 0},
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 1000}
+        ],
+        "material": "Wood",
+        "images": ["Wvdb-images/living-room/st.jpg"],
+        "description": "Set of two matching side tables with drawer storage."
+    },
+    {
+        "id": "living8",
+        "name": "Display Cabinet",
+        "price": 35000,
+        "rating": 5,
+        "weight": 45,
+        "width": 100,
+        "height": 190,
+        "depth": 40,
+        "defaultColor": "#e3d8c8",
+        "color": "#e3d8c8",
+        "availableColors": [
+            {"code": "#e3d8c8", "name": "Beige", "priceAdjustment": 0},
+            {"code": "#5b3d29", "name": "Dark Brown", "priceAdjustment": 2000}
+        ],
+        "material": "Wood/Glass",
+        "images": ["Wvdb-images/living-room/dc.jpg"],
+        "description": "Elegant display cabinet with glass doors and interior lighting."
+    }
+            ];
+	
+	window.addToCartFromStore = function(productId) {
+	const product = products.find(p => p.id === productId);
+    if (product) {
+        // Show confirmation alert
+        const userConfirmed = confirm(`Add ${product.name} to your cart?`);
+        
+        if (userConfirmed) {
+            const colorSelection = {
+                code: product.defaultColor,
+                name: product.availableColors.find((c) => c.code === product.defaultColor).name
+            };
+
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                color: colorSelection,
+                quantity: 1, // Default quantity of 1 from store page
+                image: product.images[0]
+            };
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(cartItem);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(`${product.name} has been added to your cart!`);
+            
+            // Update cart count in header
+            updateCartCount();
+        }
+    }
+}
+	
+    document.addEventListener('DOMContentLoaded', function() {
+     
+    // Pagination variables
+    const productsPerPage = 6;
+    let currentPage = 1;
+
+    // Get DOM elements
+    const searchInput = document.getElementById('store-search-input');
+
+    // Display products with pagination (no filtering)
+    function displayProducts(productsToDisplay, page) {
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const productsToShow = productsToDisplay.slice(startIndex, endIndex);
+
+        const grid = document.getElementById('products-grid');
+
+        if (productsToShow.length > 0) {
+            grid.innerHTML = productsToShow.map(product => `
+               <div class="product">
+        <a href="product.html?id=${product.id}">
+            <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
+        </a>
+        <h3>${product.name}</h3>
+        <div class="stars">${'★'.repeat(product.rating)}${'☆'.repeat(5-product.rating)}</div>
+        <p class="price"><strong>₱${product.price.toLocaleString()}.00</strong></p>
+        <div class="dimensions">
+            ${product.width}W × ${product.height}H × ${product.depth}D cm | ${product.weight} lbs
+        </div>
+        <div class="product-actions">
+            <a href="product.html?id=${product.id}" class="buy-now-button">Buy Now</a>
+            <button class="add-to-cart-button" onclick="addToCartFromStore('${product.id}')">Add to Cart</button>
+        </div>
+    </div>
+`).join('');
+        } else {
+            grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px;">No products found in this category.</p>';
+        }
+
+        updatePagination(productsToDisplay.length, page);
+    }
+
+    // Pagination controls
+    function updatePagination(totalItems, currentPage) {
+        const totalPages = Math.ceil(totalItems / productsPerPage);
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        if (totalPages <= 1) return;
+
+        // Previous button
+        if (currentPage > 1) {
+            const prevButton = document.createElement('button');
+            prevButton.className = 'page-button';
+            prevButton.innerHTML = '&laquo;';
+            prevButton.addEventListener('click', () => {
+                currentPage--;
+                displayProducts(products, currentPage); // Pass the full products array
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            pagination.appendChild(prevButton);
+        }
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.className = `page-button ${i === currentPage ? 'active' : ''}`;
+            pageButton.textContent = i;
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                displayProducts(products, currentPage); // Pass the full products array
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            pagination.appendChild(pageButton);
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+            const nextButton = document.createElement('button');
+            nextButton.className = 'page-button';
+            nextButton.innerHTML = '&raquo;';
+            nextButton.addEventListener('click', () => {
+                currentPage++;
+                displayProducts(products, currentPage); // Pass the full products array
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            pagination.appendChild(nextButton);
+        }
+    }
+
+    // Search functionality (remains active as it's not part of the 'filter' system)
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm.length > 2) {
+                const filtered = products.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.material.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+                displaySearchResults(filtered);
+            } else if (e.target.value === '') {
+                displayProducts(products, currentPage); // Show all products when search is cleared
+            }
+        });
+    }
+
+    function displaySearchResults(filteredProducts) {
+        const grid = document.getElementById('products-grid');
+        if (filteredProducts.length > 0) {
+            grid.innerHTML = filteredProducts.map(product => `
+                <<div class="product">
+        <a href="product.html?id=${product.id}">
+            <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
+        </a>
+        <h3>${product.name}</h3>
+        <div class="stars">${'★'.repeat(product.rating)}${'☆'.repeat(5-product.rating)}</div>
+        <p class="price"><strong>₱${product.price.toLocaleString()}.00</strong></p>
+        <div class="dimensions">
+            ${product.width}W × ${product.height}H × ${product.depth}D cm | ${product.weight} lbs
+        </div>
+        <div class="product-actions">
+            <a href="product.html?id=${product.id}" class="buy-now-button">Buy Now</a>
+            <button class="add-to-cart-button" onclick="addToCartFromStore('${product.id}')">Add to Cart</button>
+        </div>
+    </div>
+`).join('');
+            document.getElementById('pagination').innerHTML = ''; // Hide pagination for search results
+        } else {
+            grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px;">No products found. Try different search terms.</p>';
+            document.getElementById('pagination').innerHTML = ''; // Hide pagination for no search results
+        }
+    }
+
+    // Initial display of all products
+    displayProducts(products, currentPage);
+});
+    </script>
+</body>
+</html>

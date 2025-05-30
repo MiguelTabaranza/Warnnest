@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Sign Up</title>
+  <style>
+    * {
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+			top: 0;
+			z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-search button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        .header-right a:hover,
+        .header-center a:hover {
+            color: #5c4d37;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #f8f5f0;
+            min-height: calc(100vh - 150px); /* Adjust based on header/footer height */
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center; /* Center the form boxes horizontally */
+            align-items: center; /* Center the form boxes vertically */
+            gap: 40px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto; /* Additional centering */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .form-box:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-box h2 {
+            margin-bottom: 25px;
+            color: #5c4d37;
+            font-size: 1.8em;
+        }
+
+        .form-box label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5c4d37;
+            font-size: 0.95em;
+        }
+
+        .form-box input,
+        .form-box select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border 0.3s ease;
+        }
+
+        .form-box input:focus,
+        .form-box select:focus {
+            border-color: #a0522d;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(160, 82, 45, 0.2);
+        }
+
+        .form-box .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .form-box button {
+            width: 100%;
+            padding: 14px;
+            background: #745943;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .form-box button:hover {
+            background: #8a6a4f;
+            transform: translateY(-2px);
+        }
+
+        .form-box button:active {
+            transform: translateY(0);
+        }
+
+        .form-switch {
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+
+        .form-switch a {
+            color: #a0522d;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .form-switch a:hover {
+            color: #745943;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-box {
+                padding: 30px;
+            }
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+      <div class="header-search">
+        <input type="text" placeholder="Search items here">
+      </div>
+    </div>
+    <nav class="header-center">
+      <a href="store.html">Store</a>
+      <a href="home.html">Home</a>
+      <a href="customer-support.html">About us</a>
+    </nav>
+    <div class="header-right">
+      <a href="profile.html">👤</a>
+      <a href="wishlist.html">☆</a>
+      <a href="cart.html">🛒</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <div class="form-box" id="login-form">
+        <h2>Welcome Back</h2>
+        <form action="home.html" method="post">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" name="username" placeholder="Enter your username" required>
+          
+          <label for="login-password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+            <span class="toggle-password" onclick="togglePassword('login-password')">👁️</span>
+          </div>
+          
+          <button type="submit">Log In</button>
+        </form>
+        <div class="form-switch">
+          Don't have an account? <a onclick="switchForm('signup')">Sign Up</a>
+        </div>
+      </div>
+
+      <div class="form-box hidden" id="signup-form">
+        <h2>Create Account</h2>
+        <form action="login.html" method="post">
+          <div style="display: flex; gap: 15px;">
+            <div style="flex: 1;">
+              <label for="signup-firstname">First Name</label>
+              <input type="text" id="signup-firstname" name="firstname" placeholder="First name" required>
+            </div>
+            <div style="flex: 1;">
+              <label for="signup-lastname">Last Name</label>
+              <input type="text" id="signup-lastname" name="lastname" placeholder="Last name" required>
+            </div>
+          </div>
+          
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+          
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" name="username" placeholder="Choose a username" required>
+          
+          <label for="signup-password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="signup-password" name="password" placeholder="Create a password" required>
+            <span class="toggle-password" onclick="togglePassword('signup-password')">👁️</span>
+          </div>
+          
+          <label for="signup-language">Language</label>
+          <select id="signup-language" name="language" required>
+            <option value="">-- Select Language --</option>
+            <option value="English">English</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Japanese">Japanese</option>
+          </select>
+          
+          <button type="submit">Sign Up</button>
+        </form>
+        <div class="form-switch">
+          Already have an account? <a onclick="switchForm('login')">Log in</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Warmnest Furniture. All rights reserved.
+  </footer>
+
+  <script>
+    function switchForm(type) {
+      document.getElementById("login-form").classList.toggle("hidden", type === "signup");
+      document.getElementById("signup-form").classList.toggle("hidden", type === "login");
+      
+      document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      const icon = input.nextElementSibling;
+      input.type = input.type === "password" ? "text" : "password";
+      icon.textContent = input.type === "password" ? "👁️" : "👁️‍🗨️";
+    }
+
+    document.querySelectorAll('.form-switch a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetForm = this.getAttribute('onclick').match(/'(\w+)'/)[1];
+        switchForm(targetForm);
+      });
+    });
+
+    window.onload = () => {
+    };
+  </script>
+</body>
+</html>

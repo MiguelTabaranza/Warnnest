@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Details - Warmnest</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        main > aside {
+            width: 200px;
+        }
+
+        main > aside h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #745943;
+            font-size: 1.8rem;
+        }
+
+        main > aside hr {
+            border: 1px solid #b09b71;
+        }
+
+        main > aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        main > aside li {
+            margin-bottom: 10px;
+        }
+
+        main > aside li a {
+            text-decoration: none;
+            color: #5c4d37;
+            display: block;
+            padding: 5px 0;
+        }
+
+        main > aside li strong a {
+            color: #5c4d37;
+        }
+
+        /* Styles for the Logout Button */
+        main > aside button {
+            background-color: white;
+            border: 2px solid black;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 1em;
+            margin-top: 15px;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        main > aside button:hover {
+            background-color: #743a20;
+            color: white;
+        }
+
+        main > section {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+            /* Removed animation properties */
+            opacity: 1; /* Ensure it's visible */
+            transform: translateX(0); /* Ensure it's in final position */
+            position: relative;
+        }
+
+        main > section h1 {
+            margin-top: 0;
+            color: #a0522d;
+            margin-bottom: 15px;
+        }
+
+        main > section form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 550px;
+            max-width: 100%;
+            /* Removed animation properties */
+            opacity: 1; /* Ensure it's visible */
+            transform: translateY(0); /* Ensure it's in final position */
+        }
+
+        main > section input[type="email"],
+        main > section input[type="text"],
+        main > section select,
+        main > section input[type="address"] {
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Merriweather', serif;
+            font-size: 1.15em;
+        }
+
+        main > section select option:first-child {
+            color: #777;
+        }
+
+        main > section div {
+            display: flex;
+            gap: 20px;
+        }
+
+        main > section input[type="address"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Merriweather', serif;
+            font-size: 1.1em;
+        }
+
+        main > section button[type="submit"] {
+            background-color: #743a20;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Merriweather', serif;
+            font-size: 1.15em;
+            margin-top: 25px;
+            align-self: flex-start;
+        }
+
+        main > section button[type="submit"]:hover {
+            background-color: #745943;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+            <div class="header-search">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <nav class="header-center">
+            <a href="store.html">Store</a>
+            <a href="home.html">Home</a>
+            <a id="about-us-link" href="customer-support.html">About us</a>
+        </nav>
+        <div class="header-right">
+            <a href="profile.html">👤</a>
+            <a href="wishlist.html">☆</a>
+            <a href="cart.html">🛒</a>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Account Settings</h2>
+            <hr>
+            <ul>
+                <li><a href="profile.html">Recently purchased</a></li>
+                <li><a href="viewed-products.html">Recently viewed products</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><strong><a href="address.html">Addresses</a></strong></li>
+                <li><a href="payment.html">Payment methods</a></li>
+                <li><a href="details.html">Account details</a></li>
+                <li><a href="wishlist.html">Wishlist</a></li>
+            </ul>
+            <button id="logout-button">Logout</button>
+        </aside>
+
+        <section>
+            <h1>Addresses</h1>
+            <form id="addressForm" action="address.html" method="POST">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <div>
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                </div>
+                <select name="country" required>
+                    <option value="country">Country/Region</option>
+                    <option value="philippines">Philippines</option>
+                    <option value="china">China</option>
+                    <option value="usa">United States</option>
+                    <option value="uk">London</option>
+                    <option value="japan">Japan</option>
+                    <option value="namek">Planet Namek</option>
+                </select>
+                <input type="address" name="streetAddress" placeholder="Street address" required>
+                <div>
+                    <input type="text" name="postalCode" placeholder="Postal Code" required>
+                    <input type="text" name="stateProvince" placeholder="State/Province" required>
+                    <input type="text" name="cityMunicipality" placeholder="City/Municipality" required>
+                </div>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <button type="submit">Save</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        © 2025 Warm Nest Furniture. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function getFilename(url) {
+                return url.split('/').pop().split('?')[0].split('#')[0];
+            }
+
+            const currentPage = getFilename(window.location.pathname);
+            const sidebarLinks = document.querySelectorAll('aside ul li a');
+            sidebarLinks.forEach(link => {
+                if (getFilename(link.getAttribute('href')) === currentPage) {
+                    link.parentElement.classList.add('active-sidebar-link');
+                }
+            });
+
+            const aboutUsLink = document.getElementById('about-us-link');
+            const aboutUsPages = [
+                'customer-support.html',
+                'product-reviews.html',
+                'return-refund.html',
+                'social-media.html',
+                'help-center.html',
+                'live-chat.html',
+                'about-us.html'
+            ];
+            if (aboutUsPages.includes(currentPage)) {
+                aboutUsLink.classList.add('active-header-link');
+            }
+
+            const addressForm = document.getElementById('addressForm');
+            if (addressForm) {
+                addressForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const inputFields = addressForm.querySelectorAll('input, select');
+                    inputFields.forEach(input => {
+                        input.value = '';
+                    });
+
+                    alert('Address saved!');
+                });
+            }
+
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function() {
+                    window.location.href = 'home.html';
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

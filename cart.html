@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warmnest Furniture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .nav-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #e3d8c8;
+    border-bottom: 2px solid #5b3d29;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    gap: 20px; /* This adds space between the three main sections */
+}
+        .nav-header input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            font-size: 20px;
+            color: #5b3d29;
+            font-family: 'Canva Sans', sans-serif;
+        }
+        .nav-links img {
+            width: 30px;
+            height: 30px;
+        }
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 20px;
+        }
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            display: flex;
+            padding: 20px;
+            flex: 1;
+        }
+        footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #745943;
+    background-color: #e1d7c8;
+	color: #745943;
+    margin-top: auto;
+}
+        
+        /* Cart specific styles */
+        .cart-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        .cart-title {
+            font-size: 32px;
+            color: #5b3d29;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e3d8c8;
+            padding-bottom: 15px;
+            font-family: 'Canva Sans', sans-serif;
+            text-align: center;
+        }
+        
+        /* Cart items container */
+        .cart-items-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(91, 61, 41, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e3d8c8;
+            gap: 20px;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #e3d8c8;
+            background-color: #f9f6f1;
+            flex-shrink: 0;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            min-width: 0; /* Prevent overflow */
+        }
+
+        .cart-item-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #5b3d29;
+            font-family: 'Canva Sans', sans-serif;
+        }
+
+        .cart-item-color {
+            font-size: 0.95em;
+            color: #745943;
+            margin-bottom: 12px;
+        }
+        
+        .cart-item-price {
+            font-weight: bold;
+            color: #5b3d29;
+            min-width: 120px;
+            text-align: right;
+            font-size: 1.1em;
+            margin-right: 20px;
+        }
+        
+        /* Quantity controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .quantity-controls button {
+            background-color: #f0f0f0;
+            color: #5b3d29;
+            border: 1px solid #5b3d29;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-controls button:hover {
+            background-color: #e3d8c8;
+        }
+        
+        .quantity-controls input {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #e3d8c8;
+            border-radius: 4px;
+            padding: 6px;
+            background-color: #f9f6f1;
+        }
+        
+        /* Remove button */
+        .remove-item-button {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+            margin-left: 20px;
+        }
+        
+        .remove-item-button:hover {
+            background-color: #e60000;
+        }
+        
+        /* Cart summary */
+        .cart-summary {
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            padding: 25px;
+            border: 1px solid #e3d8c8;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .cart-summary h3 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: #5b3d29;
+            border-bottom: 2px solid #e3d8c8;
+            padding-bottom: 15px;
+            text-align: center;
+            font-family: 'Canva Sans', sans-serif;
+        }
+        
+        .cart-summary-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e3d8c8;
+        }
+        
+        .cart-summary-line:last-of-type {
+            border-bottom: none;
+        }
+        
+        .cart-summary-label {
+            font-size: 1.1em;
+            color: #745943;
+        }
+        
+        .cart-summary-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #5b3d29;
+            text-align: right;
+        }
+        
+        .cart-summary-line.total-line {
+            border-top: 2px solid #5b3d29;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+        
+        .cart-summary-line.total-line .cart-summary-label {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .cart-summary-line.total-line .cart-summary-value {
+            font-size: 1.5em;
+            color: #5b3d29;
+        }
+        
+        /* Discount badge */
+        .discount-badge-summary {
+            background-color: #d4a373;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+        
+        /* Checkout button */
+        .checkout-button-container {
+            margin-top: 30px;
+        }
+        
+        .checkout-button {
+            background-color: #5b3d29;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            font-family: 'Canva Sans', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .checkout-button:hover {
+            background-color: #745943;
+        }
+        
+        /* Empty cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px;
+            color: #745943;
+            font-size: 1.2em;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(91, 61, 41, 0.1);
+        }
+        
+        .empty-cart p {
+            margin-bottom: 20px;
+        }
+        
+        .continue-shopping {
+            display: inline-block;
+            background-color: #5b3d29;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        
+        .continue-shopping:hover {
+            background-color: #745943;
+        }
+
+        /* Checkout form styles */
+        .checkout-form-container {
+            display: none;
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(91, 61, 41, 0.1);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .checkout-form-container h2 {
+            font-size: 24px;
+            color: #5b3d29;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e3d8c8;
+            padding-bottom: 10px;
+            font-family: 'Canva Sans', sans-serif;
+        }
+
+        .checkout-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e3d8c8;
+        }
+
+        .checkout-section:last-child {
+            border-bottom: none;
+        }
+
+        .checkout-section h3 {
+            font-size: 18px;
+            color: #5b3d29;
+            margin-bottom: 15px;
+            font-family: 'Canva Sans', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #745943;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="email"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e3d8c8;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f9f6f1;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #e3d8c8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .shipping-option:hover {
+            background-color: #f9f6f1;
+        }
+
+        .shipping-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .shipping-option-details {
+            flex-grow: 1;
+        }
+
+        .shipping-option-name {
+            font-weight: bold;
+            color: #5b3d29;
+        }
+
+        .shipping-option-duration {
+            font-size: 14px;
+            color: #745943;
+        }
+
+        .shipping-option-price {
+            font-weight: bold;
+            color: #5b3d29;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .payment-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e3d8c8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            background-color: #f9f6f1;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-bottom: 10px;
+        }
+
+        .payment-option-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .coupon-section {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .coupon-section select {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #e3d8c8;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #f9f6f1;
+    color: #5b3d29;
+}
+
+.coupon-section select:focus {
+    outline: none;
+    border-color: #d4a373;
+}
+
+        .coupon-section button {
+            background-color: #d4a373;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+
+        .coupon-section button:hover {
+            background-color: #c08a5b;
+        }
+
+        .applied-coupon {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f0e6d6;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .applied-coupon-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .applied-coupon-name {
+            font-weight: bold;
+            color: #5b3d29;
+        }
+
+        .applied-coupon-percent {
+            background-color: #d4a373;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .remove-coupon {
+            color: #ff6666;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .order-summary-checkout {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f6f1;
+            border-radius: 8px;
+            border: 1px solid #e3d8c8;
+        }
+
+        .order-summary-checkout h3 {
+            font-size: 18px;
+            color: #5b3d29;
+            margin-bottom: 15px;
+            font-family: 'Canva Sans', sans-serif;
+            border-bottom: 1px solid #e3d8c8;
+            padding-bottom: 10px;
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .order-summary-label {
+            color: #745943;
+        }
+
+        .order-summary-value {
+            font-weight: bold;
+            color: #5b3d29;
+        }
+
+        .order-summary-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #5b3d29;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .place-order-button {
+            background-color: #5b3d29;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            font-family: 'Canva Sans', sans-serif;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .place-order-button:hover {
+            background-color: #745943;
+        }
+
+        .back-to-cart {
+            display: inline-block;
+            margin-top: 15px;
+            color: #5b3d29;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .back-to-cart:hover {
+            color: #745943;
+        }
+		
+		.logo {
+      display: flex;
+      align-items: center;
+      font-size: 2em;
+      font-family: 'Canva Sans', sans-serif;
+    }
+
+    .logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+	
+	.logo-search-container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust this value to control the space between logo and search */
+}
+    </style>
+</head>
+<body>
+   <div class="page-wrapper">
+        <header class="nav-header">
+    <div class="logo-search-container"> <!-- Add this wrapper div -->
+        <div class="logo">
+            <img src="Wvdb-images/homepage/logo.png" alt="Logo">
+        </div>
+        <input type="text" placeholder="Search" id="store-search-input">
+    </div>
+    <div class="nav-links">
+        <a href="store.html"><div>Store</div></a>
+        <a href="home.html"><div>Home</div></a>
+        <a href="customer-support.html"><div>About us</div></a>
+    </div>
+    <div class="icons">
+        <a href="profile.html" class="icon-link">👤</a>
+        <a href="wishlist.html" class="icon-link">☆</a>
+        <a href="cart.html" class="icon-link">🛒</a>
+    </div>
+</header>
+        
+        <div class="main-content">
+            <div class="cart-container">
+                <h1 class="cart-title">Shopping Cart</h1>
+                <div id="cart-content">
+                    <!-- Cart items will be dynamically inserted here -->
+                </div>
+                
+                <!-- Checkout form (hidden by default) -->
+                <div id="checkout-form" class="checkout-form-container">
+                    <h2>Checkout</h2>
+                    
+                    <div class="checkout-section">
+                        <h3>Shipping Information</h3>
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <h3>Shipping Method</h3>
+                        <div class="shipping-options">
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping" value="free" checked>
+                                <div class="shipping-option-details">
+                                    <div class="shipping-option-name">Free Shipping</div>
+                                    <div class="shipping-option-duration">5 to 7 days (On orders over ₱5,000)</div>
+                                </div>
+                                <div class="shipping-option-price">Free</div>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping" value="express">
+                                <div class="shipping-option-details">
+                                    <div class="shipping-option-name">Express Shipping</div>
+                                    <div class="shipping-option-duration">1 to 2 days</div>
+                                </div>
+                                <div class="shipping-option-price">₱120</div>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping" value="standard">
+                                <div class="shipping-option-details">
+                                    <div class="shipping-option-name">Standard Shipping</div>
+                                    <div class="shipping-option-duration">3 to 5 days</div>
+                                </div>
+                                <div class="shipping-option-price">₱55</div>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping" value="same-day">
+                                <div class="shipping-option-details">
+                                    <div class="shipping-option-name">Same Day Delivery</div>
+                                    <div class="shipping-option-duration">Within 24 hours</div>
+                                </div>
+                                <div class="shipping-option-price">₱200</div>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping" value="pickup">
+                                <div class="shipping-option-details">
+                                    <div class="shipping-option-name">Pick-Up in Store</div>
+                                    <div class="shipping-option-duration">Ready in 1 hour</div>
+                                </div>
+                                <div class="shipping-option-price">Free</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="credit" checked>
+                                <div class="payment-option-icon">💳</div>
+                                <div>Credit Card</div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="paypal">
+                                <div class="payment-option-icon">🔵</div>
+                                <div>PayPal</div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="gcash">
+                                <div class="payment-option-icon">📱</div>
+                                <div>GCash</div>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cod">
+                                <div class="payment-option-icon">💰</div>
+                                <div>Cash on Delivery</div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-section">
+    <h3>Apply Coupon</h3>
+    <div class="coupon-section">
+        <select id="coupon-select">
+            <option value="">Select a coupon...</option>
+            <option value="SUMMER20">SUMMER20 - Summer Sale (20% OFF)</option>
+            <option value="WELCOME10">WELCOME10 - Welcome Discount (10% OFF)</option>
+            <option value="FREESHIP">FREESHIP - Free Shipping</option>
+        </select>
+        <button id="apply-coupon">Apply</button>
+    </div>
+    <div id="applied-coupon-display" style="display: none;">
+        <div class="applied-coupon">
+            <div class="applied-coupon-info">
+                <span class="applied-coupon-name">SUMMER20</span>
+                <span class="applied-coupon-percent">20% OFF</span>
+            </div>
+            <span class="remove-coupon">Remove</span>
+        </div>
+    </div>
+</div>
+                    
+                    <div class="order-summary-checkout">
+                        <h3>Order Summary</h3>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">Subtotal (2 items):</span>
+                            <span class="order-summary-value" id="checkout-subtotal">₱60,000.00</span>
+                        </div>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">Shipping:</span>
+                            <span class="order-summary-value" id="checkout-shipping">Free</span>
+                        </div>
+                        <div class="order-summary-item">
+                            <span class="order-summary-label">Discount:</span>
+                            <span class="order-summary-value" id="checkout-discount">-₱11,400.00</span>
+                        </div>
+                        <div class="order-summary-item order-summary-total">
+                            <span class="order-summary-label">Total:</span>
+                            <span class="order-summary-value" id="checkout-total">₱48,600.00</span>
+                        </div>
+                    </div>
+                    
+                    <button class="place-order-button">Place Order</button>
+                    <div class="back-to-cart" id="back-to-cart">← Back to Cart</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Warm Nest Furniture. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script/shared.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartContent = document.getElementById('cart-content');
+            const checkoutForm = document.getElementById('checkout-form');
+            const backToCartBtn = document.getElementById('back-to-cart');
+            const applyCouponBtn = document.getElementById('apply-coupon');
+            const appliedCouponDisplay = document.getElementById('applied-coupon-display');
+            
+            // Load cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let checkoutData = {
+                shipping: 'free',
+                payment: 'credit',
+                coupon: null
+            };
+            
+            // Available coupons
+            const availableCoupons = [
+                { code: 'SUMMER20', name: 'Summer Sale', percent: 20 },
+                { code: 'WELCOME10', name: 'Welcome Discount', percent: 10 },
+                { code: 'FREESHIP', name: 'Free Shipping', percent: 0, freeShipping: true }
+            ];
+            
+            function renderCart() {
+                let html = '';
+                let subtotal = 0;
+                let totalDiscount = 0;
+
+                if (cart.length === 0) {
+                    html = `
+                        <div class="empty-cart">
+                            <p>Your cart is currently empty.</p>
+                            <a href="store.html" class="continue-shopping">Continue Shopping</a>
+                        </div>
+                    `;
+                } else {
+                    html += '<div class="cart-items-container">';
+                    
+                    cart.forEach((item, index) => {
+                        // Calculate item total
+                        const itemTotal = item.price * item.quantity;
+                        subtotal += itemTotal;
+
+                        html += `
+                            <div class="cart-item">
+                                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                                <div class="cart-item-details">
+                                    <div class="cart-item-name">${item.name}</div>
+                                    <div class="cart-item-color">Color: ${item.color.name}</div>
+                                    <div class="quantity-controls">
+                                        <button onclick="updateQuantity(${index}, -1)">−</button>
+                                        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value - ${item.quantity})">
+                                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="cart-item-price">₱${itemTotal.toLocaleString()}.00</div>
+                                <button class="remove-item-button" onclick="removeItem(${index})">Remove</button>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>'; // Close cart-items-container
+
+                    // Calculate shipping cost (free for orders over ₱5000)
+                    const shippingCost = subtotal >= 5000 ? 0 : 120;
+                    const finalTotal = subtotal + shippingCost;
+
+                    html += `
+                        <div class="cart-summary">
+                            <h3>Order Summary</h3>
+                            <div class="cart-summary-line">
+                                <span class="cart-summary-label">Subtotal (${cart.length} ${cart.length === 1 ? 'item' : 'items'}):</span>
+                                <span class="cart-summary-value">₱${subtotal.toLocaleString()}.00</span>
+                            </div>
+                            
+                            <div class="cart-summary-line">
+                                <span class="cart-summary-label">Shipping:</span>
+                                <span class="cart-summary-value">${shippingCost === 0 ? 'Free' : `₱${shippingCost.toLocaleString()}.00`}</span>
+                            </div>
+                            
+                            <div class="cart-summary-line total-line">
+                                <span class="cart-summary-label">Total:</span>
+                                <span class="cart-summary-value">₱${finalTotal.toLocaleString()}.00</span>
+                            </div>
+                            
+                            <div class="checkout-button-container">
+                                <button class="checkout-button" onclick="showCheckoutForm()">Proceed to Checkout</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                cartContent.innerHTML = html;
+            }
+            
+            // Initialize the cart display
+            renderCart();
+            
+            // Function to update quantity
+            window.updateQuantity = function(index, change) {
+                const newQuantity = cart[index].quantity + change;
+                
+                if (newQuantity < 1) {
+                    return;
+                }
+                
+                cart[index].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            };
+            
+            // Function to remove item
+            window.removeItem = function(index) {
+                if (confirm('Are you sure you want to remove this item from your cart?')) {
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                    
+                    // Update cart count in header
+                    updateCartCount();
+                }
+            };
+            
+            // Function to show checkout form
+            window.showCheckoutForm = function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty');
+                    return;
+                }
+                
+                // Calculate cart totals
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const shippingCost = subtotal >= 5000 ? 0 : 120;
+                const total = subtotal + shippingCost;
+                
+                // Update checkout summary
+                document.getElementById('checkout-subtotal').textContent = `₱${subtotal.toLocaleString()}.00`;
+                document.getElementById('checkout-shipping').textContent = shippingCost === 0 ? 'Free' : `₱${shippingCost.toLocaleString()}.00`;
+                document.getElementById('checkout-discount').textContent = '₱0.00';
+                document.getElementById('checkout-total').textContent = `₱${total.toLocaleString()}.00`;
+                
+                // Show checkout form
+                cartContent.style.display = 'none';
+                checkoutForm.style.display = 'block';
+            };
+            
+            // Back to cart button
+            backToCartBtn.addEventListener('click', function() {
+                cartContent.style.display = 'block';
+                checkoutForm.style.display = 'none';
+            });
+            
+            // Shipping method change
+            document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    checkoutData.shipping = this.value;
+                    updateCheckoutSummary();
+                });
+            });
+            
+            // Payment method change
+            document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    checkoutData.payment = this.value;
+                });
+            });
+            
+            // Apply coupon
+            applyCouponBtn.addEventListener('click', function() {
+                const couponSelect = document.getElementById('coupon-select');
+                const selectedCouponCode = couponSelect.value;
+                
+                if (!selectedCouponCode) {
+                    alert('Please select a coupon');
+                    return;
+                }
+                
+                const coupon = availableCoupons.find(c => c.code === selectedCouponCode);
+                
+                if (coupon) {
+                    checkoutData.coupon = coupon;
+                    appliedCouponDisplay.style.display = 'block';
+                    appliedCouponDisplay.querySelector('.applied-coupon-name').textContent = coupon.code;
+                    
+                    if (coupon.freeShipping) {
+                        appliedCouponDisplay.querySelector('.applied-coupon-percent').textContent = 'Free Shipping';
+                    } else {
+                        appliedCouponDisplay.querySelector('.applied-coupon-percent').textContent = `${coupon.percent}% OFF`;
+                    }
+                    
+                    updateCheckoutSummary();
+                }
+            });
+            
+            // Remove coupon
+            document.querySelector('.remove-coupon').addEventListener('click', function() {
+                checkoutData.coupon = null;
+                appliedCouponDisplay.style.display = 'none';
+                document.getElementById('coupon-select').selectedIndex = 0;
+                updateCheckoutSummary();
+            });
+            
+            // Update checkout summary
+            function updateCheckoutSummary() {
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                let shippingCost = 0;
+                let discountAmount = 0;
+                
+                // Calculate shipping cost based on selected method
+                switch (checkoutData.shipping) {
+                    case 'free':
+                        shippingCost = subtotal >= 5000 ? 0 : 120;
+                        break;
+                    case 'express':
+                        shippingCost = 120;
+                        break;
+                    case 'standard':
+                        shippingCost = 55;
+                        break;
+                    case 'same-day':
+                        shippingCost = 200;
+                        break;
+                    case 'pickup':
+                        shippingCost = 0;
+                        break;
+                }
+                
+                // Apply coupon discount if available
+                if (checkoutData.coupon) {
+                    if (checkoutData.coupon.freeShipping) {
+                        shippingCost = 0;
+                    } else {
+                        discountAmount = subtotal * (checkoutData.coupon.percent / 100);
+                    }
+                }
+                
+                const total = subtotal - discountAmount + shippingCost;
+                
+                // Update display
+                document.getElementById('checkout-subtotal').textContent = `₱${subtotal.toLocaleString()}.00`;
+                document.getElementById('checkout-shipping').textContent = shippingCost === 0 ? 'Free' : `₱${shippingCost.toLocaleString()}.00`;
+                document.getElementById('checkout-discount').textContent = discountAmount > 0 ? `-₱${discountAmount.toLocaleString()}.00` : '₱0.00';
+                document.getElementById('checkout-total').textContent = `₱${total.toLocaleString()}.00`;
+            }
+            
+            // Place order
+            document.querySelector('.place-order-button').addEventListener('click', function() {
+                // Validate form
+                const fullName = document.getElementById('full-name').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const email = document.getElementById('email').value.trim();
+                
+                if (!fullName || !address || !phone || !email) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+                
+                // Create order object
+                const order = {
+                    date: new Date().toISOString(),
+                    items: [...cart],
+                    shipping: checkoutData.shipping,
+                    payment: checkoutData.payment,
+                    coupon: checkoutData.coupon,
+                    customer: {
+                        name: fullName,
+                        address: address,
+                        phone: phone,
+                        email: email
+                    },
+                    total: document.getElementById('checkout-total').textContent
+                };
+                
+                // Save order to localStorage (in a real app, you would send this to a server)
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.push(order);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                
+                // Clear cart
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Redirect to confirmation page
+                window.location.href = 'order-confirmation.html';
+            });
+        });
+    </script>
+</body>
+</html>

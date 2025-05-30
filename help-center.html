@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Warmnest</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            color: #333;
+            font-family: arial, sans-serif;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            font-family: 'merriweather', serif;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #e1d7c8;
+            border-bottom: 2px solid #745943;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-search {
+            display: flex;
+        }
+
+        .header-search input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #5b3d29;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .header-search button {
+            background-color: white;
+            border: 1px solid #b09b71;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            padding: 8px 10px;
+        }
+
+        .header-search button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .header-center {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-center a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-weight: 500;
+            padding: 5px 15px;
+        }
+
+        .header-center a strong {
+            color: #5c4d37;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-right a {
+            text-decoration: none;
+            color: #5c4d37;
+            font-size: 1em;
+        }
+
+        .header-right a:hover,
+        .header-center a:hover {
+            color: #5c4d37;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        main > aside {
+            width: 200px;
+        }
+
+        main > aside h1 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #745943;
+            font-size: 1.8rem;
+        }
+
+        main > aside hr {
+            border: 1px solid #b09b71;
+        }
+
+        main > aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        main > aside li {
+            margin-bottom: 10px;
+        }
+
+        main > aside li a {
+            text-decoration: none;
+            color: #5c4d37;
+            display: block;
+            padding: 5px 0;
+        }
+
+        main > aside li strong a {
+            color: #5c4d37;
+        }
+
+        #help-center {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #b09b71;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        #help-center h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #745943;
+            font-size: 2rem;
+        }
+
+        #help-center input[type="text"] {
+            padding: 10px;
+            border: 1px solid #b09b71;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            background-color: white;
+            color: #5c4d37;
+            border: 2px solid #b09b71;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .toggle-btn:hover {
+            background-color: #b09b71;
+        }
+
+        .toggle-section {
+            display: none; /* Default hidden */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            border: 2px solid #b09b71;
+        }
+
+        /* New class to show the section */
+        .toggle-section.show {
+            display: block; /* Make it visible */
+        }
+
+        .toggle-section h2,
+        .toggle-section h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .faq-list {
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #5c4d37;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 5px;
+        }
+
+        .faq-question:hover {
+            color: #a0522d;
+        }
+
+        .faq-answer {
+            display: none;
+            padding-left: 15px;
+            color: #666;
+        }
+
+        /* Styles for the "Track Order" section */
+        .order-item {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            gap: 15px; /* Spacing between elements */
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item img {
+            width: 100px; /* Slightly larger image for better visibility */
+            height: auto;
+            border-radius: 5px;
+            object-fit: cover; /* Ensures image covers the area without distortion */
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+
+        .order-details-group {
+            flex-grow: 1; /* Allows this group to take available space */
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Spacing between detail lines */
+        }
+
+        .order-item-name a {
+            font-weight: bold;
+            color: #5c4d37;
+            text-decoration: none;
+            font-size: 1.1em; /* Slightly larger font for the name */
+        }
+
+        .order-item-name a:hover {
+            text-decoration: underline;
+        }
+
+        .order-item-quantity,
+        .order-item-price {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .order-item-price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .order-status-group {
+            display: flex;
+            flex-direction: column; /* Stack date and status vertically */
+            align-items: flex-end; /* Align status details to the right */
+            gap: 5px;
+            color: #666;
+            font-size: 0.9em;
+            text-align: right; /* Align text to the right within the group */
+            min-width: 150px; /* Ensure enough space for status text */
+        }
+
+        .order-date-status div:first-child {
+            font-weight: 500; /* Make date slightly bolder */
+        }
+
+        .order-status-highlight {
+            font-weight: bold;
+            color: #a0522d; /* Highlight status for quick scanning */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #745943;
+            background-color: #e1d7c8;
+            color: #745943;
+            margin-top: auto;
+        }
+
+        @media only screen and (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-search {
+                margin-top: 10px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .header-center {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+
+            .header-center a {
+                margin: 5px 10px;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: #745943;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+
+            .header-center a:hover {
+                background-color: #e1d7c8;
+                color: #a0522d;
+            }
+
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            main > aside {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            main > aside ul {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0;
+            }
+
+            main > aside li {
+                margin-bottom: 10px;
+                text-align: center;
+                width: 100%;
+            }
+
+            #help-center {
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+
+            #help-center h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            #help-center input[type="text"] {
+                margin-bottom: 15px;
+            }
+
+            .toggle-btn {
+                margin-bottom: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .toggle-section {
+                margin-bottom: 15px;
+            }
+
+            .faq-list {
+                padding-left: 10px;
+            }
+
+            .order-item {
+                flex-direction: column; /* Stack details vertically on small screens */
+                align-items: flex-start; /* Align details to the left */
+                gap: 10px;
+                padding: 10px 0;
+            }
+
+            .order-item img {
+                width: 80px;
+                margin-right: 0; /* Remove margin when stacked */
+            }
+
+            .order-details-group {
+                width: 100%; /* Take full width */
+            }
+
+            .order-status-group {
+                width: 100%; /* Take full width */
+                align-items: flex-start; /* Align status to the left */
+                text-align: left; /* Align text to the left */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <a href="home.html"><img src="images/logo.png" alt="Warmnest Logo" style="height: 30px; width: 30px; margin-right: 10px;"></a>
+            <div class="header-search">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <nav class="header-center">
+            <a href="store.html">Store</a>
+            <a href="home.html">Home</a>
+            <a href="customer-support.html">About us</a>
+        </nav>
+        <div class="header-right">
+            <a href="profile.html">👤</a>
+            <a href="wishlist.html">☆</a>
+            <a href="cart.html">🛒</a>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <h1>About Us</h1>
+            <hr>
+            <ul>
+                <li><a href="customer-support.html">Customer Support</a></li>
+                <li><a href="product-reviews.html">Product Reviews</a></li>
+                <li><a href="return-refund.html">Return & Refund Policy</a></li>
+                <li><a href="social-media.html">Social Media</a></li>
+                <li><a href="#help-center"><strong>Help Center</strong></a></li>
+                <li><a href="live-chat.html">Live Chat Support</a></li>
+            </ul>
+        </aside>
+
+        <div id="help-center">
+            <h1>Help Center</h1>
+
+            <input type="text" id="help-search-bar" placeholder="Search for quick help" onkeyup="filterHelpContent()">
+            <br><br>
+
+            <button class="toggle-btn" onclick="toggleSection('faqs')">FAQs</button>
+            <div id="faqs" class="toggle-section">
+                <h2>FAQs</h2>
+
+                <h3>Order & Payment FAQs</h3>
+                <ul class="faq-list">
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-1')">How do I place an order?</div>
+                        <p id="answer-1" class="faq-answer">To place an order, simply browse our products, add the items you wish to purchase to your cart, and proceed to the checkout page. Follow the on-screen instructions to enter your shipping and payment details.</p>
+                    </li>
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-2')">What payment methods do you accept?</div>
+                        <p id="answer-2" class="faq-answer">We accept a variety of payment methods, including major credit cards (Visa, MasterCard, American Express), PayPal, and direct bank transfers. You can see the full list of accepted methods at the checkout page.</p>
+                    </li>
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-3')">Is my payment information secure?</div>
+                        <p id="answer-3" class="faq-answer">Yes, your payment information is highly secure. We use industry-standard SSL (Secure Socket Layer) encryption to protect your personal and payment details during transmission. We do not store your full credit card information on our servers.</p>
+                    </li>
+                </ul>
+
+                <h3>Shipping & Delivery FAQs</h3>
+                <ul class="faq-list">
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-4')">What are your shipping options?</div>
+                        <p id="answer-4" class="faq-answer">We offer several shipping options to meet your needs, including standard shipping, expedited shipping, and in some areas, white-glove delivery for larger furniture items. The available options and their costs will be displayed at checkout.</p>
+                    </li>
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-5')">Do you ship internationally?</div>
+                        <p id="answer-5" class="faq-answer">Currently, we primarily ship within [mention your primary shipping region/countries]. Please check our shipping policy page or contact our customer support team to inquire about specific international shipping options.</p>
+                    </li>
+                    <li class="faq-item">
+                        <div class="faq-question" onclick="toggleAnswer('answer-6')">How can I track my order?</div>
+                        <p id="answer-6" class="faq-answer">Once your order has been shipped, you will receive a confirmation email containing a tracking number and a link to the carrier's website. You can use this tracking number to monitor the progress of your delivery.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSection('track-order')">Track Order</button>
+            <div id="track-order" class="toggle-section">
+                <h2>Track Your Orders</h2>
+                <div id="order-container">
+                    <div class="order-item">
+                        <img src="images/Wvdb images/Chair/beanbag-4.jpg" alt="Bean Bag">
+                        <div class="order-details-group">
+                            <div class="order-item-name"><a href="store.html">Bean Bag</a></div>
+                            <div class="order-item-quantity">Quantity: 2</div>
+                            <div class="order-item-price">Price: ₱30,000</div>
+                        </div>
+                        <div class="order-status-group">
+                            <div>Order Date: 2024-04-15</div>
+                            <div class="order-status-highlight">Order Status: To review</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <img src="images/Wvdb images/living room/1.jpg" alt="Sofa">
+                        <div class="order-details-group">
+                            <div class="order-item-name"><a href="store.html">Sofa</a></div>
+                            <div class="order-item-quantity">Quantity: 1</div>
+                            <div class="order-item-price">Price: ₱30,000</div>
+                        </div>
+                        <div class="order-status-group">
+                            <div>Order Date: 2024-04-18</div>
+                            <div class="order-status-highlight">Order Status: To be shipped</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <img src="images/Wvdb images/set/dining.jpg" alt="Dining Set">
+                        <div class="order-details-group">
+                            <div class="order-item-name"><a href="store.html">Dining Set</a></div>
+                            <div class="order-item-quantity">Quantity: 1</div>
+                            <div class="order-item-price">Price: ₱25,000</div>
+                        </div>
+                        <div class="order-status-group">
+                            <div>Order Date: 2024-04-20</div>
+                            <div class="order-status-highlight">Order Status: Unpaid</div>
+                        </div>
+                    </div>
+                    <div class="order-item">
+                        <img src="images/Wvdb images/appliances/oven.jpg" alt="Oven">
+                        <div class="order-details-group">
+                            <div class="order-item-name"><a href="store.html">Oven</a></div>
+                            <div class="order-item-quantity">Quantity: 1</div>
+                            <div class="order-item-price">Price: ₱10,000</div>
+                        </div>
+                        <div class="order-status-group">
+                            <div>Order Date: 2024-04-10</div>
+                            <div class="order-status-highlight">Order Status: Shipped</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Warm Nest Furniture. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                if (section.classList.contains('show')) {
+                    section.classList.remove('show');
+                } else {
+                    section.classList.add('show');
+                }
+            }
+        }
+
+        function toggleAnswer(answerId) {
+            const answer = document.getElementById(answerId);
+            if (answer) {
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        function filterHelpContent() {
+            const searchInput = document.getElementById('help-search-bar').value.toLowerCase();
+            const faqSection = document.getElementById('faqs');
+            const orderSection = document.getElementById('track-order');
+
+            const faqItems = faqSection.querySelectorAll('.faq-item');
+            const orderItems = orderSection.querySelectorAll('.order-item');
+
+            let faqsFound = false;
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                if (question.includes(searchInput) || answer.includes(searchInput)) {
+                    item.style.display = ''; 
+                    item.querySelector('.faq-answer').style.display = 'block';
+                    faqsFound = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            let ordersFound = false;
+            orderItems.forEach(item => {
+                const itemName = item.querySelector('.order-item-name').textContent.toLowerCase();
+                const orderStatus = item.querySelector('.order-status-group').textContent.toLowerCase(); 
+
+                if (itemName.includes(searchInput) || orderStatus.includes(searchInput)) {
+                    item.style.display = '';
+                    ordersFound = true;
+                } else {
+                    item.style.display = 'none'; 
+                }
+            });
+
+            const faqButton = document.querySelector('button[onclick="toggleSection(\'faqs\')"]');
+            if (searchInput === '' || faqsFound) {
+                faqButton.style.display = 'block'; 
+                if (searchInput !== '') { 
+                    faqSection.style.display = 'block';
+                    faqSection.classList.add('show');
+                } else { 
+                    faqSection.classList.remove('show');
+                    faqSection.style.display = 'none';
+                }
+            } else {
+                faqButton.style.display = 'none'; 
+                faqSection.classList.remove('show');
+                faqSection.style.display = 'none';
+            }
+
+
+            const trackOrderButton = document.querySelector('button[onclick="toggleSection(\'track-order\')"]');
+            if (searchInput === '' || ordersFound) {
+                trackOrderButton.style.display = 'block'; 
+                if (searchInput !== '') { 
+                    orderSection.style.display = 'block';
+                    orderSection.classList.add('show');
+                } else { 
+                    orderSection.classList.remove('show');
+                    orderSection.style.display = 'none';
+                }
+            } else {
+                trackOrderButton.style.display = 'none'; 
+                orderSection.classList.remove('show');
+                orderSection.style.display = 'none';
+            }
+
+            if (!faqsFound && !ordersFound && searchInput !== '') {
+                faqSection.classList.remove('show');
+                faqSection.style.display = 'none';
+                orderSection.classList.remove('show');
+                orderSection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

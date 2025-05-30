@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>Warmnest</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Canva Sans', sans-serif;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    header {
+      font-size: 2rem;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #745943;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #e1d7c8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .header-center {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .header-center a {
+      text-decoration: none;
+      padding: 0 50px;
+      color: #745943;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .header-center a:hover {
+      color: #5a4532;
+      transform: translateY(-2px);
+    }
+    
+    .header-right {
+      display: flex;
+      gap: 20px;
+    }
+	
+	.logo {
+      display: flex;
+      align-items: center;
+      font-size: 2em;
+      font-family: 'Canva Sans', sans-serif;
+    }
+
+    .logo img {
+      width: 50px;
+      height: 65px;
+      object-fit: contain;
+    }
+    
+    .search-container {
+      height: 55px;
+      display: flex;
+      align-items: center;
+      border: 2px solid #745943;
+      background-color: #ffffff;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-container:hover {
+      box-shadow: 0 0 0 2px rgba(116, 89, 67, 0.3);
+    }
+    
+    input[type="text"] {
+      padding:14px 12px;
+      border: 1px solid #ffffff;
+      border-radius: 3px;
+      width: 230px;
+      outline: none;
+    }
+    
+    button {
+      padding: 8px 12px;
+      background-color: #ffffff;
+      border: 1px solid #ffffff;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+      transition: all 0.2s ease;
+    }
+    
+    button:hover {
+      transform: scale(1.1);
+    }
+    
+    .hero-section {
+      position: relative;
+      margin: 50px;
+      border: 2px solid #745943;
+      height: 70vh;
+      min-height: 600px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      transition: background-image 1s ease-in-out;
+    }
+    
+    .hero-content {
+  position: absolute;
+  z-index: 2;
+  text-align: left;
+  color: #745943;
+  padding: 30px;
+  max-width: 1200px;
+  width: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  border: 2px solid #745943; /* Border color matching your theme */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin: 0 50px;
+    }
+    
+    .hero-content h2 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #745943;
+  /* Remove text shadows if they were there before */
+  text-shadow: none;
+    }
+    
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #745943;
+      background-color: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    #prev-slide {
+      left: 30px;
+    }
+    
+    #next-slide {
+      right: 30px;
+    }
+    
+    .nav-arrow:hover {
+      background-color: rgba(255,255,255,0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .shop-now-btn {
+      background-color: #745943;
+      color: #ffffff;
+      padding: 15px 30px;
+      font-size: 2rem; 
+      border: none;
+      margin-top: 30px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 5px;
+      text-align: left;
+    }
+    
+    .shop-now-btn:hover {
+      background-color: #5a4532; 
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid #745943;
+      background-color: #e1d7c8;
+      color: #745943;
+      margin-top: auto;
+    }
+    
+    .icon-link {
+      font-size: 1.2rem;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    
+    .icon-link:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Overlay with reduced opacity for better image visibility */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,0.2);
+      z-index: 1;
+    }
+    
+    /* Slide indicators */
+    .slide-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    .slide-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(116, 89, 67, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .slide-indicator.active {
+      background-color: #745943;
+      transform: scale(1.2);
+    }
+    
+    /* Featured products slide styles */
+    .featured-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f6f1;
+      padding: 40px;
+    }
+    
+    .featured-products-title {
+  font-size: 3rem;
+  color: #745943;
+  margin-bottom: 40px;
+  padding: 15px 30px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 2px solid #745943;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+    }
+    
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .featured-item {
+      background: white;
+      border: 1px solid #e3d8c8;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .featured-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(116, 89, 67, 0.1);
+    }
+    
+    .featured-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 1px solid #e3d8c8;
+    }
+    
+    .featured-info {
+      padding: 20px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .featured-info h3 {
+      color: #5b3d29;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .featured-price {
+      color: #745943;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: 1024px) {
+      .featured-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .hero-section {
+        height: auto;
+        min-height: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+		.hero-content {
+    padding: 20px;
+    margin: 0 20px;
+  }
+  
+  .hero-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .featured-products-title {
+    font-size: 2rem;
+    padding: 10px 20px;
+  }
+      .featured-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+      
+      .hero-content h2 {
+        font-size: 3.5rem; 
+  margin-bottom: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  /* Add these new properties */
+  -webkit-text-stroke: 1px white; /* For WebKit browsers */
+  text-stroke: 1px white; /* Standard property */
+  paint-order: stroke fill; /* Ensures stroke is behind the fill */
+  color: #745943; /* Maintain your existing color */
+}
+      }
+      
+      .featured-products-title {
+        font-size: 2.5rem;
+      }
+      
+      .nav-arrow {
+        width: 50px;
+        height: 50px;
+      }
+      
+      #prev-slide {
+        left: 15px;
+      }
+      
+      #next-slide {
+        right: 15px;
+      }
+    }
+	
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+	<div class="logo">
+      <img src="Wvdb-images/homepage/logo.png" alt="Logo">
+	  </div>
+      <div class="search-container">
+        <a href="home2.html" onclick="event.preventDefault(); window.location.href='home2.html';">
+          <input type="text" value="Search" readonly style="cursor: pointer;">
+          <button>🔍</button>
+        </a>
+      </div>
+    </div>
+    
+    <div class="header-center">
+      <a href="store.html">Store</a>
+      <a href="home.html">Home</a>
+      <a href="customer-support.html">About us</a>
+    </div>
+    
+    <div class="header-right">
+      <a href="profile.html" class="icon-link">👤</a>
+      <a href="wishlist.html" class="icon-link">☆</a>
+      <a href="cart.html" class="icon-link">🛒</a>
+    </div>
+  </header>
+
+  <div class="hero-section" id="hero-slideshow">
+    <div class="hero-overlay"></div>
+    <div class="nav-arrow" id="prev-slide">❮</div>
+    <div id="slide-container"></div>
+    <div class="nav-arrow" id="next-slide">❯</div>
+    <div class="slide-indicators" id="slide-indicators"></div>
+  </div>
+  
+  <footer>
+    © 2025 Warm Nest Furniture. All rights reserved.
+  </footer>
+	
+	<div class="page-transition" id="pageTransition"></div>
+	
+  <script>
+ document.addEventListener('DOMContentLoaded', function() {
+      const heroSection = document.getElementById('hero-slideshow');
+      const slideContainer = document.getElementById('slide-container');
+      const prevButton = document.getElementById('prev-slide');
+      const nextButton = document.getElementById('next-slide');
+      const indicatorsContainer = document.getElementById('slide-indicators');
+      
+      const slides = [
+        { 
+          type: 'image',
+          content: 'Wvdb-images/homepage/Homepage.png',
+          title: 'Warm Nest',
+          subtitle: 'Elevate your Home'
+        },
+        { 
+          type: 'image',
+          content: 'Wvdb-images/homepage/sofa-collection.jpg',
+          title: 'New Arrivals',
+          subtitle: 'Luxury Sofa Collection'
+        },
+        { 
+          type: 'image',
+          content: 'Wvdb-images/homepage/bedroom-set.jpg',
+          title: 'Bedroom Sets',
+          subtitle: 'Dreamy Comfort'
+        },
+        {
+          type: 'featured',
+          title: 'Featured Products',
+          products: [
+            {
+              image: 'Wvdb-images/living-room/19.jpg',
+              name: 'Luxury Sofa',
+              price: '₱40,000'
+            },
+            {
+              image: 'Wvdb-images/bed/bed21.jpg',
+              name: 'Queen Bed',
+              price: '₱50,000'
+            },
+            {
+              image: 'Wvdb-images/set/6.jpg',
+              name: 'Dining Set',
+              price: '₱45,000'
+            },
+            {
+              image: 'Wvdb-images/living-room/47.jpg',
+              name: 'Coffee Table',
+              price: '₱18,000'
+            }
+          ]
+        }
+      ];
+
+      let currentSlide = 0;
+      let slideInterval;
+      
+      function createIndicators() {
+        indicatorsContainer.innerHTML = '';
+        slides.forEach((_, index) => {
+          const indicator = document.createElement('div');
+          indicator.classList.add('slide-indicator');
+          if (index === currentSlide) indicator.classList.add('active');
+          indicator.addEventListener('click', () => {
+            goToSlide(index);
+          });
+          indicatorsContainer.appendChild(indicator);
+        });
+      }
+      
+      function updateIndicators() {
+        const indicators = document.querySelectorAll('.slide-indicator');
+        indicators.forEach((indicator, index) => {
+          if (index === currentSlide) {
+            indicator.classList.add('active');
+          } else {
+            indicator.classList.remove('active');
+          }
+        });
+      }
+      
+      function goToSlide(index) {
+        currentSlide = index;
+        updateSlide();
+        resetInterval();
+      }
+      
+      function updateSlide() {
+        const slide = slides[currentSlide];
+        slideContainer.innerHTML = '';
+        
+        if (slide.type === 'image') {
+          slideContainer.innerHTML = `
+            <div class="hero-content">
+              <h2>${slide.title}<br>${slide.subtitle}</h2>
+              <a href="store.html" class="shop-now-btn">Shop Now</a>
+            </div>
+          `;
+          heroSection.style.backgroundImage = `url('${slide.content}')`;
+          heroSection.style.backgroundColor = 'transparent';
+        } else if (slide.type === 'featured') {
+          slideContainer.innerHTML = `
+            <div class="featured-slide">
+              <h2 class="featured-products-title">${slide.title}</h2>
+              <div class="featured-grid">
+                ${slide.products.map(product => `
+                  <div class="featured-item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="featured-info">
+                      <h3>${product.name}</h3>
+                      <p class="featured-price">${product.price}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+          heroSection.style.backgroundImage = 'none';
+          heroSection.style.backgroundColor = '#f9f6f1';
+        }
+        
+        updateIndicators();
+      }
+      
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlide();
+      }
+      
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateSlide();
+      }
+      
+      function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+      
+      function initSlideshow() {
+        createIndicators();
+        updateSlide();
+        slideInterval = setInterval(nextSlide, 5000);
+        
+        nextButton.addEventListener('click', () => {
+          nextSlide();
+          resetInterval();
+        });
+        
+        prevButton.addEventListener('click', () => {
+          prevSlide();
+          resetInterval();
+        });
+        
+        heroSection.addEventListener('mouseenter', () => {
+          clearInterval(slideInterval);
+        });
+        
+        heroSection.addEventListener('mouseleave', () => {
+          resetInterval();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetInterval();
+          } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            resetInterval();
+          }
+        });
+      }
+      
+      initSlideshow();
+    });
+  </script>
+</body>
+</html>
